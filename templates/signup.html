@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style media="screen">
+  #body{
+    background-color:#ccc555;
+  }
+
+</style>
+{% if not request.user.is_authenticated %}
+  <h2>Sign up</h2>
+
+  <form method="post" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-danger" type="submit">Sign up</button>
+  </form>
+  {% else %}
+  <div class="card border-danger mb-3 " style="width:25rem;margin-left:25%;">
+    <div class="card-body">
+      <p class="card-text"> you're already login </p>
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}

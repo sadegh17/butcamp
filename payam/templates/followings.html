@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head %}
+  followings | {{block.super}}
+{% endblock %}
+
+
+{% block content %}
+<style media="screen">
+  #body{
+    background-color:#ccc555;
+  }
+
+</style>
+<div class="list-group mb-3" style="width:25rem;margin-left:25%;">
+  <a  class="list-group-item list-group-item-action"><h3>followings List</h3></a>
+  {% for item in object_list %}
+    <a  href="{% url "update" slug=item.user %}" class="list-group-item list-group-item-action list-group-item-secondary">{{item.user.username}}</a>
+  {% endfor %}
+</div>
+
+{% endblock %}

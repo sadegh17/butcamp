@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block head %}
+  test | {{block.super}}
+{% endblock %}
+
+
+{% block content %}
+{% if request.user == object.user  %}
+
+<style media="screen">
+
+  #body{background-color:{{color}};}
+  a{color : red; text-decoration:none;}
+</style>
+{% else %}
+<style media="screen">
+  #body{background-color:{{color}};}
+  a{color : red; text-decoration:none;}
+</style>
+{% endif %}
+
+
+
+<div class="card ">
+  <div class="card-header">
+
+    <h1>
+      {{ object.user.username }}
+     {% if not request.user == object.user  %}
+        <span>{% include "snippet/follow.html" with username=object.user.username is_following=is_following %}</span>
+        {% if request.user in object.follower.all %}
+        <a class="btn btn-success" href="{% url 'pv:to' slug=object.user.username %}">private message</a>
+        {% endif %}
+      {% endif %}
+    </h1>
+    <small class="btn btn-outline-dark">  name:{{object.name}} </small>
+    <p></p>
+    <div class="btn-group" role="group" aria-label="Basic example">
+    <a class="btn btn-outline-danger" href="{% url 'payam:followers' slug=object.user.username %}">followers</a>
+    <a class="btn btn-outline-danger" href="{% url 'payam:followings' slug=object.user.username %}">following</a>
+    <a class="btn btn-outline-danger" href="{% url 'home' %}" >Home</a>
+    </div>
+  </div>
+  <div class="card-body">
+    <p>email: {{object.email}}</p>
+    <div class="list-group">
+      <a  class="list-group-item list-group-item-action">Favarite</a>
+      {% for item in object.get_fave %}
+        <a  class="list-group-item list-group-item-action list-group-item-secondary">{{item}}</a>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+
+{% if object.user == request.user  %}
+<div class="card">
+  <div class="card-head">
+    <h1>make changes</h1>
+  </div>
+  <div class="card-body">
+    <form action="{% url "update" slug=object.slug %}" method="post">
+      {% csrf_token %}
+      {{form.as_p}}
+      <input class="btn btn-danger"type="submit" name="save" value="Update">
+    </form>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block head %}
+  private | {{block.super}}
+{% endblock %}
+
+
+{% block content %}
+<style media="screen">
+  #body{
+    background-color:#ccc555;
+  }
+
+</style>
+<h1 class="list-group-item list-group-item-dark m-2 "> {{maghsad}} </h1>
+<div class="card mb-3" style="width:25rem;margin-left:25%;">
+  <div class="card-body text-center">
+    <form class="form-inline ml-3"  action="." method="GET">
+
+        <div class="form-group mx-sm-3 mb-2">
+          <input type="text" name="q" autofocus onfocus="this.value=''"  value='{{request.GET.q}}'>
+
+        </div>
+      <button class="btn btn-danger "type="submit" >send</button>
+    </form>
+  </div>
+
+</div>
+
+{% for item in object_list %}
+
+<div class="list-group mb-3"
+style="width:25rem;
+{% if item.owner.username == request.user.username %} margin-left: 40%;{% else %} margin-left:10%;{% endif %}"
+>
+
+  <div class="list-group-item
+   {% if item.owner.username == request.user.username %} border-danger{% else %} border-success{% endif %}">
+      {{item.matn}} &emsp; <span class="text-muted">{{item.time.time}}</span> &ensp;
+      <span>
+        {% if item.owner == request.user  %}
+          {% if item.read  %}
+            seen
+          {% else %}
+            deliver
+          {% endif %}
+        {% endif %}
+      </span>
+  </div>
+</div>
+
+{% endfor %}
+
+
+
+{%  endblock %}

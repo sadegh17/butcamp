@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block head %}
+  private | {{block.super}}
+{% endblock %}
+
+
+{% block content %}
+<style media="screen">
+  #body{
+    background-color:#ccc555;
+  }
+
+</style>
+<div class="card"style="width:99%;margin:auto;">
+  <div class="card-header">
+    <h2>private list</h2>
+  </div>
+  <div class="card-body">
+    {% for item in list %}
+    <div class="list-group mb-1 "style="width:99%;margin:auto;">
+        <a class="list-group-item list-group-item-dark list-group-item-action " style="height:10%; font-size:30px;" href="{% url 'pv:to' slug=item %}">
+          {{item}}
+            {% if item in new %}
+              &emsp;<span style="font-size:15px;" class="badge badge-warning ">new</span>
+            {% endif %}
+        </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

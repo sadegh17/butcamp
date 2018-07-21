@@ -1,0 +1,8 @@
+{% if request.user.is_authenticated %}
+
+<form class="form mt-3" action="{% url 'follow' %}" method="post">
+  {% csrf_token %}
+<input type="hidden" name="username" value="{% if username %}{{object.user.username}}{% else %} sadegh {% endif %}">
+<button class="{% if is_following %}btn btn-secondary{% else %}btn btn-danger{% endif %}"id="follow"> {% if is_following %}Unfollow{% else %}Follow{% endif %}</button>
+</form>
+{% endif %}
